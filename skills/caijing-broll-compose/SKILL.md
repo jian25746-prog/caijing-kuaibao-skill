@@ -1,6 +1,6 @@
 ---
 name: caijing-broll-compose
-description: 把财经快报当天渲染好的透明PNG切片卡片（hook/narration/bottom）与素材库里的B-roll视频自动合成为12秒竖屏成片（1440×2560），带全天统一选片、跨天冷却防重复、同源画面去重。也负责素材库的扫描打标与入库。当用户要求"合成今天的成片/出片/给快报配画面/整理素材入库"时使用。依赖 ffmpeg 与 Python3+Pillow。
+description: 把财经快报当天渲染好的透明PNG切片卡片（hook/narration/bottom）与素材库里的B-roll视频自动合成为12秒竖屏成片（1440×2560），带全天统一选片、跨天冷却防重复、同源画面去重。也负责素材库的扫描打标入库，以及从使用者自行接入的下载渠道按缺口补货。当用户要求"合成今天的成片/出片/给快报配画面/整理素材入库/补素材"时使用。依赖 ffmpeg 与 Python3+Pillow。
 ---
 
 你是财经快报的成片合成助理。输入是 `caijing-kuaibao` skill 当天产出的 `PNG素材/` 与 `工作区/caijing_slices.json`，输出是每条 12 秒的竖屏成片 `成片/成片_XX_主题.mp4`。
@@ -29,7 +29,7 @@ echo "BROLL_LIBRARY=$BROLL_LIBRARY"; ls "$BROLL_LIBRARY"; python3 -c "import jso
 └── _review/            扫描打标产生的联系表，入库后可清理
 ```
 
-> ⚖️ **版权**：素材库里只能放你**有权使用**的画面和音乐（自己拍的、已购授权的、明确允许再使用的免版权素材）。本 skill 不提供任何素材，也不提供下载他人视频的工具。
+> ⚖️ **版权**：素材库里只能放你**有权使用**的画面和音乐（自己拍的、已购授权的、明确允许再使用的免版权素材）。本 skill 不提供任何素材，也**不内置任何下载渠道**；补货功能只提供接入框架，接入哪个渠道、是否有权使用其素材，由使用者自行确认。
 
 ════════════════════════════════════
 【成片规格】（定稿，勿随意改）
@@ -89,6 +89,26 @@ python3 "{SKILL_DIR}/tools/compose_day.py" "{DAY_DIR}" --plan "{DAY_DIR}/工作�
 4. **补字段**：`build` 不会自动写 `identity`/`region`，入库后手动补进 library.json
 5. **全量重审**（库大了以后打标质量参差时）：`python3 "{SKILL_DIR}/tools/retag.py" pages` 生成高清重审页，审完写 decisions 后 `retag.py apply <decisions.json>`
 6. 新实体/新地域：在 `compose_day.py` 的 `ENTITY_ALIASES` / `REGION_HINTS` / `THEME_RULES` 里补关键词，分配器才认得
+
+════════════════════════════════════
+【素材补货】（成片熔断或缺口清单有未解决项时）
+════════════════════════════════════
+
+`{SKILL_DIR}/tools/restock.py` 按关键词从**使用者自己接入的下载渠道**搜索、竖屏优先下载，并自动生成联系表，之后走上面【素材入库流程】的第 2 步起人工审片入库。
+
+**先确认有可用渠道**：
+```bash
+python3 "{SKILL_DIR}/tools/restock.py" sources
+```
+显示"尚未接入任何下载源"时 → **停止补货**，告诉用户：复制 `{SKILL_DIR}/tools/sources/_template.py` 改名填写即可接入渠道，完整说明见 `{SKILL_DIR}/tools/sources/README.md`。**不得自行编写或临时拼凑下载渠道去下载素材**，接入哪个渠道由用户决定。
+
+**补货流程**：
+1. `restock.py gaps` 列出未解决缺口（来自 `{LIBRARY}/_review/素材缺口清单.md`：手工表格 + 成片合成自动登记的近 7 天缺口）；搜索词建议来自可选的 `{LIBRARY}/restock_keywords.json`（`{"缺口名": ["搜索词1","搜索词2"]}`）
+2. `restock.py search "关键词" [--source 渠道名]` 看候选，竖屏在前；`--landscape` 放宽到横屏
+3. `restock.py auto "关键词" --name 缺口名 --top 2` 自动下载前 2 条未下载过的竖屏并生成联系表；或 `restock.py fetch 渠道名:ID --name 缺口名` 单条下载
+4. 审片入库后，在缺口清单对应行标 ✅ 并注明补了几条、哪天
+
+每条下载的页面地址、作者、授权会自动记入 `{LIBRARY}/_incoming/_downloaded.json`，同一条不会重复下载。补货每个缺口只取少量候选，遵守各渠道的请求频率与批量下载限制。
 
 ════════════════════════════════════
 【安全守则】

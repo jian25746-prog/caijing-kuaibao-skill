@@ -34,7 +34,7 @@ skills/
 │   ├── src/                 渲染、校验门禁、历史去重、信源健康度脚本
 │   ├── config/templates.json  五套卡片配色模板
 │   └── examples/show.config.example.json
-├── caijing-broll-compose/   PNG卡片 + B-roll → 12秒成片，及素材库打标入库
+├── caijing-broll-compose/   PNG卡片 + B-roll → 12秒成片，素材库打标入库，可扩展的素材补货框架
 └── caijing-distribute/      YouTube / 视频号 / 今日头条分发 + 小红书手动包
 requirements.txt
 ```
@@ -101,6 +101,7 @@ cp -R caijing-kuaibao-skill/skills/* ~/.claude/skills/
 | `CAIJING_WORKSPACE` | 节目工作区 | 当前目录 |
 | `BROLL_LIBRARY` | B-roll 素材库根目录 | 必须设置 |
 | `BROLL_ARCHIVE` | （可选）源视频归档目录，供重审工具找回原片 | 空 |
+| `RESTOCK_SOURCES` | （可选）素材补货默认使用的下载渠道，逗号分隔 | 全部可用渠道 |
 | `CAIJING_UPLOAD_HOME` | 分发用的账号登录态、密钥、发布物料目录 | `~/caijing-distribute` |
 | `CAIJING_SHOW` | 播放数据回流对应的节目名 | `7点财经播报` |
 | `CAIJING_WATERMARK` | 卡片底部水印文字（主流程会按配置的品牌自动传入） | `凡人投资 \| 仅供参考，不构成投资建议` |
@@ -115,6 +116,8 @@ cp -R caijing-kuaibao-skill/skills/* ~/.claude/skills/
 ## B-roll 素材库
 
 成片合成需要你自己的素材库。仓库**不附带任何素材**，只提供索引格式示例 `skills/caijing-broll-compose/examples/library.example.json`。用 `prep_broll.py scan` 扫描你的视频生成联系表，打标后 `prep_broll.py build` 入库，完整流程见该 skill 的 SKILL.md。
+
+**自动补素材**：`tools/restock.py` 能按缺口关键词从你接入的渠道搜索、竖屏优先下载，并自动生成联系表、记录每条素材的出处和授权。它**不内置任何下载渠道**，从哪里下载由你决定：复制 `tools/sources/_template.py`、改名、实现一个搜索函数即可接入一个新渠道，放进目录就自动生效，主程序不用改。详见 [`tools/sources/README.md`](skills/caijing-broll-compose/tools/sources/README.md)。
 
 ## 合规与免责
 
