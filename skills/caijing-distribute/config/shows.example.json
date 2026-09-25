@@ -1,0 +1,33 @@
+{
+  "_说明": "复制到 $CAIJING_UPLOAD_HOME/config/shows.json 后按自己的节目修改。base=节目工作区绝对路径；collection=视频号合集名（留空则不加合集）；youtube_playlist_id=YouTube播放列表ID（留空则不加列表）。上传系统只读节目目录、绝不写入。",
+  "7点财经播报": {
+    "base": "/absolute/path/to/your/show/workspace",
+    "aliases": [
+      "7点财经快报",
+      "7点财经",
+      "快报"
+    ],
+    "clip_glob": [
+      "第*条*.mp4",
+      "成片/成片_*.mp4"
+    ],
+    "broadcast_file": "今日播报内容.txt",
+    "first_comment_file": "首条评论.txt",
+    "toutiao_file": "衍生内容/头条图文.txt",
+    "today_entries_file": "工作区/today_entries.json",
+    "market_snapshot_file": "工作区/market_snapshot.json",
+    "platforms": [
+      "shipinhao",
+      "xiaohongshu",
+      "youtube",
+      "toutiao"
+    ],
+    "collection": "",
+    "youtube_playlist_id": "",
+    "fixed_tags": [
+      "财经",
+      "财经早知道"
+    ],
+    "schedule_time": "07:00"
+  }
+}

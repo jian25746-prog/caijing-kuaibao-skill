@@ -1,0 +1,11 @@
+{
+  "name": "caijing-kuaibao-skills",
+  "owner": { "name": "凡人投资" },
+  "plugins": [
+    {
+      "name": "caijing-kuaibao",
+      "source": "./",
+      "description": "每日财经快报 AI 制作流水线（含选题核查、切片渲染、成片合成、多平台分发三个 skill）"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "caijing-kuaibao",
+  "version": "1.0.0",
+  "description": "每日财经快报 AI 制作流水线：新闻抓取选题、防伪核查、旁白与切片文案、PNG 渲染、B-roll 成片合成、多平台分发",
+  "author": { "name": "凡人投资" },
+  "license": "MIT",
+  "keywords": ["财经", "新闻", "短视频", "自媒体", "视频号", "finance", "news"]
+}

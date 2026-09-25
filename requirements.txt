@@ -1,0 +1,9 @@
+# 主 skill（caijing-kuaibao）与成片合成（caijing-broll-compose）
+Pillow>=10.0
+
+# 多平台分发（caijing-distribute），不用分发可不装
+playwright>=1.40
+google-api-python-client>=2.100
+google-auth>=2.20
+google-auth-oauthlib>=1.0
+imageio-ffmpeg>=0.4

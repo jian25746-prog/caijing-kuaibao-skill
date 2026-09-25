@@ -1,0 +1,49 @@
+{
+  "_说明": "素材索引示例（虚构数据）。真实 library.json 由 prep_broll.py build 自动生成，只需补 identity/region。",
+  "clips": [
+    {
+      "file": "clips/空镜_城市/20260101_城市_天际线黄昏_6s_a1b2c3.mp4",
+      "date": "20260101",
+      "topic": "城市",
+      "visual": "天际线黄昏",
+      "category": "空镜_城市",
+      "dur": 4.2,
+      "source": "my_drone_footage_001.mp4",
+      "in": 1.8,
+      "out": 6.0,
+      "crop": null,
+      "note": "无人机黄昏天际线，中央纯净",
+      "theme": "通用",
+      "generic": true,
+      "subjects": ["摩天楼群", "黄昏航拍"],
+      "themes": ["通用", "城市"],
+      "attrs": {"shot": "航拍", "time": "黄昏", "motion": "缓", "loc": "室外"},
+      "desc": "城市CBD黄昏航拍，楼群灯光初亮",
+      "scene_id": "a1b2-1",
+      "identity": null,
+      "region": "中"
+    },
+    {
+      "file": "clips/空镜_黄金/20260101_黄金_金条特写_4s_d4e5f6.mp4",
+      "date": "20260101",
+      "topic": "黄金",
+      "visual": "金条特写",
+      "category": "空镜_黄金",
+      "dur": 3.5,
+      "source": "licensed_stock_gold_bars.mp4",
+      "in": 0.0,
+      "out": 3.5,
+      "crop": null,
+      "note": "金条堆叠缓推，无文字",
+      "theme": "黄金",
+      "generic": false,
+      "subjects": ["金条"],
+      "themes": ["黄金", "大宗"],
+      "attrs": {"shot": "特写", "time": "室内", "motion": "缓", "loc": "室内"},
+      "desc": "金条堆叠特写缓慢推镜",
+      "scene_id": "d4e5-1",
+      "identity": null,
+      "region": null
+    }
+  ]
+}
