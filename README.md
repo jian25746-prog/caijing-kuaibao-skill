@@ -1,5 +1,9 @@
 # 财经快报 AI 制作流水线（Claude Code Skills）
 
+**An AI newsroom pipeline for Claude Code that turns verified daily financial news into publish-ready short videos.**
+
+From overnight news scanning to fact-checked scripts, rendered vertical cards, 12-second B-roll shorts and multi-platform publishing (YouTube, WeChat Channels, Toutiao) — built and battle-tested on a real daily finance show. Every fact and number in the output must trace back to the original source; anything unverified blocks rendering. Documentation is in Chinese.
+
 一套每天自动产出**财经短视频快报**的 Claude Code skill：从凌晨抓取国内外财经新闻开始，经过选题、逐条事实核查、写旁白与切片文案、发布前硬门禁校验，到渲染竖屏卡片、合成 12 秒成片，最后分发到 YouTube / 微信视频号 / 今日头条，并为小红书生成手动发布包。
 
 作者用它每天运营一档真实节目《7点财经快报》，本仓库的规则、阈值和"血泪教训"注释都来自几个月的实跑。
@@ -68,6 +72,22 @@ cp -R caijing-kuaibao-skill/skills/* ~/.claude/skills/
 | 多平台分发 | `pip install -r requirements.txt`，再 `playwright install chromium` |
 
 卡片默认使用 macOS 自带中文字体（冬青黑体 / 华文黑体），Linux 下会回退到 Droid Sans Fallback。
+
+## 兼容性
+
+**目前只支持 Claude Code**（在 macOS 上实际运行；Linux 下卡片渲染有字体回退，但未实测；Windows 未测试）。
+
+三个 skill 的情况不一样：
+
+| Skill | 能否在其他 AI 工具里用 | 原因 |
+|---|---|---|
+| `caijing-kuaibao`（主流程） | **不能** | 依赖两项 Claude Code 专属能力：① **Claude in Chrome** 浏览器扩展，用于抓取新闻页面、回原文核实事实；② **派发 Sonnet / Opus 子代理**，分别执行事实核查和写稿。另外手动运行时的选题确认用到 `AskUserQuestion` 选择弹窗 |
+| `caijing-broll-compose`（成片合成） | 理论上可以，未测试 | 流程只是读说明、运行 Python 脚本，不依赖 Claude 专属工具 |
+| `caijing-distribute`（多平台分发） | 理论上可以，未测试 | 同上 |
+
+- `SKILL.md` 本身是通用格式，Codex、Cursor 等支持 SKILL.md 的工具也许能加载，但主流程在那里跑不起来，**请不要把本仓库当作"跨平台 skill"**。
+- 所有 Python 脚本（渲染、校验门禁、成片合成、各平台上传）都可以脱离任何 AI 工具直接在命令行运行，用法写在每个脚本开头的注释里。
+- 欢迎为其他 AI 工具做适配：主流程需要替换的，正是上面列出的网页读取和子代理两项能力。
 
 ## 快速开始
 

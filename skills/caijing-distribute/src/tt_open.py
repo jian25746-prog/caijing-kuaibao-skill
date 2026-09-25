@@ -4,6 +4,8 @@
 tt_open.py — 一次性打开今日头条创作者后台让用户扫码登录；cookie 持久化到 tt_profile。
 判据用 URL：登录页含 login/auth，登录后进 mp.toutiao.com 的工作台。
 （沿用视频号那套：标准 Playwright + 独立 profile，与 sph/xhs 互不干扰）
+
+用法: python3 tt_open.py   （无参数；弹出浏览器，扫码登录后自动保存登录态到 $CAIJING_UPLOAD_HOME/config/）
 """
 import os, time
 from playwright.sync_api import sync_playwright

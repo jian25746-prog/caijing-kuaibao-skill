@@ -3,6 +3,8 @@
 """
 sph_open.py — 一次性打开微信视频号创作后台让用户扫码登录；cookie 持久化到 sph_profile。
 检测：登录页是 login.html，登录后跳到 /platform/... → 用 URL 是否离开 login 判定（可靠）。
+
+用法: python3 sph_open.py   （无参数；弹出浏览器，扫码登录后自动保存登录态到 $CAIJING_UPLOAD_HOME/config/）
 """
 import os, time
 from playwright.sync_api import sync_playwright
