@@ -17,6 +17,14 @@ From overnight news scanning to fact-checked scripts, rendered vertical cards, 1
  → 发布硬门禁 → PNG渲染
 ```
 
+## 效果展示
+
+▶ **真实样片**：[现代Q3销量将超越福特，底特律巨头缺混动成软肋｜7点财经快报](https://youtube.com/shorts/vymUWjib_48)（2026 年 9 月 25 日节目，作者频道 [凡人财经 | Everyman Finance](https://www.youtube.com/@%E5%87%A1%E4%BA%BA%E8%B4%A2%E7%BB%8FEverymanFinance)）
+
+![同一条新闻生成的三张卡片：屏幕大字、旁白页、研判卡](docs/images/showcase-cards.png)
+
+上图是这条样片的三张卡片，由 `renderer.py` 生成的透明 PNG。成片时它们叠在 B-roll 背景画面上，这里用纯色背景代替。
+
 ## 它和"让 AI 写新闻"有什么不同
 
 - **事实只从原文来**：选题阶段只看标题，不让模型写摘要；最终入选的每条新闻由核查步骤回到原文**机械提取**事实片段，产出 `verified_facts`（可写事实）、`allowed_numbers`（可用数字）和 `forbidden_facts`（被原文推翻、禁止使用的说法）。写稿只准用白名单里的东西。
